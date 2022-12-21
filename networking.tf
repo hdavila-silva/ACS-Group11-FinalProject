@@ -1,3 +1,12 @@
+# Define the provider
+provider "aws" {
+  region = "us-east-1"
+}
+# Data source for availability zones in us-east-1
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 ### CUSTOM VPC CONFIGURATION
 
 resource "random_integer" "random" {
@@ -16,9 +25,6 @@ resource "aws_vpc" "three_tier_vpc" {
   lifecycle {
     create_before_destroy = true
   }
-}
-
-data "aws_availability_zones" "available" {
 }
 
 ### INTERNET GATEWAY
