@@ -3,12 +3,12 @@
 resource "aws_lb" "three_tier_lb" {
   name            = "three-tier-loadbalancer"
   security_groups = [aws_security_group.three_tier_lb_sg.id]
-  subnets         = [
+  subnets = [
     "${aws_subnet.three_tier_public_subnets.0.id}",
     "${aws_subnet.three_tier_public_subnets.1.id}",
     "${aws_subnet.three_tier_public_subnets.2.id}",
   ]
-  idle_timeout    = 400
+  idle_timeout = 400
 
   depends_on = [
     var.app_asg

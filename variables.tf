@@ -15,7 +15,7 @@ variable "private_sn_count" {
 
 variable "access_ip" {
   type    = string
-  default = "54.166.138.10/32"
+  default = "34.224.95.27/32"
 }
 
 #variable "db_subnet_group" {
@@ -39,17 +39,17 @@ variable "access_ip" {
 #  default = data.aws_lb_target_group.three_tier_tg
 #}
 variable "lb_tg" {
-  type = string
+  type    = string
   default = "lb_tg"
 }
 
 variable "bastion_instance_count" {
-  type = number
+  type    = number
   default = 1
 }
 
 variable "instance_type" {
-  type = string
+  type    = string
   default = "t3.micro"
 }
 
@@ -58,24 +58,24 @@ variable "instance_type" {
 #variable "lb_sg" {}
 #variable "public_subnets" {}
 variable "app_asg" {
-  type = string
+  type    = string
   default = "aws_autoscaling_group.three_tier_app"
 }
 variable "tg_port" {
-  type = number
+  type    = number
   default = 80
 }
 variable "tg_protocol" {
-  type = string
+  type    = string
   default = "HTTP"
 }
 #variable "vpc_id" {}
 variable "listener_port" {
-  type = number
+  type    = number
   default = 80
 }
 variable "listener_protocol" {
-  type = string
+  type    = string
   default = "HTTP"
 }
 #variable "azs" {}
