@@ -39,26 +39,26 @@ variable "ec2_count" {
 variable "my_public_ip" {
   type        = string
   description = "Public IP of my Cloud9"
-  default     = "35.175.132.177"
+  default     = "34.203.75.236"
 }
 
 # Cloud9 Private IP
 variable "my_private_ip" {
   type        = string
   description = "Private IP of my Cloud9"
-  default     = "172.31.57.39"
+  default     = "172.31.62.112"
 }
 
 # ASG Size for Dev Deployment
-variable "desired_size" {
+variable "desired_capacity" {
   type        = number
-  description = "Desired size for ASG"
+  description = "Desired capacity for ASG"
   default     = 2
 }
 
 # Bastion CIDR for EC2 SG
 variable "bastion_cidrs" {
   type        = string
-  default     = "10.200.2.0/24"
-  description = "Public IP of my Cloud 9 station to be opened in bastion ingress"
+  default     = "10.100.2.0/24"
+  description = "Bastion subnet range
 }

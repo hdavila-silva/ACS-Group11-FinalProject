@@ -17,7 +17,7 @@ data "aws_ami" "latest_amazon_linux" {
 data "terraform_remote_state" "network" {
   backend = "s3"
   config = {
-    bucket = "acs730-dev"
+    bucket = "group11-dev-private-bucket"
     key    = "dev/network/terraform.tfstate"
     region = "us-east-1"
   }
@@ -68,7 +68,7 @@ resource "aws_instance" "webserver" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}Webserver${count.index + 1}"
+      "Name" = "${local.name_prefix}-webserver-${count.index + 1}"
     }
   )
 }
@@ -87,25 +87,23 @@ resource "aws_security_group" "webserver_sg" {
   vpc_id      = data.terraform_remote_state.network.outputs.vpc_id
 
   ingress {
-    description = "HTTP from Bastion"
+    description = "http from bastion server"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    #security_groups = [aws_security_group.bastion_sg.id]
     cidr_blocks = [var.bastion_cidrs]
   }
 
   ingress {
-    description = "SSH from Bastion"
+    description = "ssh from Bastion server"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    #security_groups = [aws_security_group.bastion_sg.id]
     cidr_blocks = [var.bastion_cidrs]
   }
 
   ingress {
-    description     = "HTTP from LB"
+    description     = "http from alb"
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
@@ -121,7 +119,7 @@ resource "aws_security_group" "webserver_sg" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}WebserverSg"
+      "Name" = "${local.name_prefix}-webserverSg"
     }
   )
 }
@@ -145,7 +143,7 @@ resource "aws_instance" "bastion" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}Bastion"
+      "Name" = "${local.name_prefix}-bastion"
     }
   )
 }
@@ -173,7 +171,7 @@ resource "aws_security_group" "bastion_sg" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}BastionSg"
+      "Name" = "${local.name_prefix}-bastionSg"
     }
   )
 }
@@ -182,7 +180,7 @@ resource "aws_security_group" "bastion_sg" {
 # alb module to attach   EC2 instances load balancer
 
 module "alb" {
-  source          = "../../../modules/alb"
+  source          = "../../../modules/loadbalancing"
   env             = var.env
   vpc_id          = data.terraform_remote_state.network.outputs.vpc_id
   security_groups = [aws_security_group.lb_sg.id]
@@ -197,7 +195,7 @@ resource "aws_security_group" "lb_sg" {
   vpc_id      = data.terraform_remote_state.network.outputs.vpc_id
 
   ingress {
-    description      = "HTTP from everywhere"
+    description      = "http from internet"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
@@ -205,7 +203,7 @@ resource "aws_security_group" "lb_sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
   ingress {
-    description      = "HTTP from everywhere"
+    description      = "http from internet"
     from_port        = 8080
     to_port          = 8080
     protocol         = "tcp"
@@ -223,7 +221,7 @@ resource "aws_security_group" "lb_sg" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}AlbSg"
+      "Name" = "${local.name_prefix}-albSg"
     }
   )
 }
@@ -231,10 +229,10 @@ resource "aws_security_group" "lb_sg" {
 # Auto-Scaling Group module
 
 module "asg" {
-  source              = "../../../modules/asg"
+  source              = "../../../modules/autoscaling"
   default_tags        = var.default_tags
   env                 = var.env
-  desired_size        = var.desired_size
+  desired_capacity    = var.desired_capacity
   instance_type       = var.instance_type
   public_key          = aws_key_pair.web_key.key_name
   prefix              = var.prefix
