@@ -19,7 +19,7 @@ locals {
 
 # create load balancer
 resource "aws_lb" "alb" {
-  name               = "${local.name_prefix}Alb"
+  name               = "${local.name_prefix}-loadBalancer"
   internal           = false
   ip_address_type    = "ipv4"
   load_balancer_type = "application"
@@ -30,7 +30,7 @@ resource "aws_lb" "alb" {
 
   tags = merge(local.default_tags,
     {
-      "Name" = "${local.name_prefix}ALB"
+      "Name" = "${local.name_prefix}-loadBalancer"
     }
   )
 }
@@ -56,7 +56,7 @@ resource "aws_lb_target_group" "target_group" {
     healthy_threshold   = 5
     unhealthy_threshold = 2
   }
-  name        = "${local.name_prefix}AlbTargetGrp"
+  name        = "${local.name_prefix}-albTG"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
