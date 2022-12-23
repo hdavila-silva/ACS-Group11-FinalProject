@@ -30,7 +30,7 @@ locals {
 
 # Webserver Launch Configuration
 resource "aws_launch_configuration" "web" {
-  name            = "${var.prefix}-${var.env}-webserverTemplate"
+  name            = "${var.prefix}-${var.env}-launchConfiguration"
   image_id        = data.aws_ami.latest_amazon_linux.id
   instance_type   = lookup(var.instance_type, var.env)
   key_name        = var.public_key
@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "web_asg" {
   name                 = "${local.name_prefix}-webserverAsg"
   min_size             = 1
   max_size             = 4
-  desired_capacity     = var.desired_size
+  desired_capacity     = var.desired_capacity
   launch_configuration = aws_launch_configuration.web.name
   vpc_zone_identifier  = var.vpc_zone_identifier[*]
   lifecycle {
@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "web_asg" {
 
   tag {
     key                 = "Name"
-    value               = "${local.name_prefix}-autoscaledWebserver"
+    value               = "${local.name_prefix}-webserver-asg"
     propagate_at_launch = true
   }
 }

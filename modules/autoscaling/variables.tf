@@ -58,8 +58,8 @@ variable "public_key" {
   default     = null
 }
 
-variable "desired_size" {
+variable "desired_capacity" {
   type        = number
-  description = "Desired size for ASG"
+  description = "Desired capacity for ASG"
   # default     = 2
 }
