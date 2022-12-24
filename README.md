@@ -8,15 +8,15 @@ git clone git@github.com:hdavila-silva/ACS-Group11-FinalProject.git
 
 2. Create ssh keys for each environment.
 
-infrastructure/dev
+infrastructure/dev/webservers
 ssh-keygen -t rsa -f devkey
 chmod 400 devkey*
 
-infrastructure/staging
+infrastructure/staging/webservers
 ssh-keygen -t rsa -f stagingkey
 chmod 400 stagingkey*
 
-infrastructure/prod
+infrastructure/prod/webservers
 ssh-keygen -t rsa -f prodkey
 chmod 400 prodkey*
 
@@ -25,8 +25,8 @@ TASKS TO TEST CODE:
 1. Create S3 buckets needed for the project:
 
 cd ACS-Group11-FinalProject/infrastructure/s3/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 2. Upload two images to S3 bucket: group11-webpage-bucket
 
@@ -42,32 +42,32 @@ terraform init
 terraform apply --auto-approve
 
 ACS-Group11-FinalProject/infrastructure/dev/webservers/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 Browse the load balancer url and refresh several times.
 
 4. Deploy and validate staging environment:
 
 ACS-Group11-FinalProject/infrastructure/staging/networking/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 ACS-Group11-FinalProject/infrastructure/staging/webservers/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 Browse the load balancer url and refresh several times.
 
 4. Deploy and validate the production environment:
 
 ACS-Group11-FinalProject/infrastructure/prod/networking/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 ACS-Group11-FinalProject/infrastructure/prod/webservers/
-terraform init
-terraform apply --auto-approve
+terraform init;
+terraform apply --auto-approve;
 
 Browse the load balancer url and refresh several times.
 
