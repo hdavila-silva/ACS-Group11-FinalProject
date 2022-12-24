@@ -1,5 +1,5 @@
 # Module to deploy basic networking 
-module "vpc-dev" {
+module "vpc-staging" {
   source              = "../../../modules/aws_network"
   env                 = var.env
   vpc_cidr            = var.vpc_cidr

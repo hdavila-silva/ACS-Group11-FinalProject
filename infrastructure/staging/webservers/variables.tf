@@ -1,8 +1,8 @@
 # Instance type
 variable "instance_type" {
   default = {
-    "Prod"    = "t3.medium"
-    "Staging" = "t3.small"
+    "prod"    = "t3.medium"
+    "staging" = "t3.small"
     "dev"     = "t3.micro"
   }
   description = "Type of the instance"
@@ -25,7 +25,7 @@ variable "prefix" {
 
 # Variable to signal the current environment 
 variable "env" {
-  default     = "dev"
+  default     = "staging"
   type        = string
   description = "Deployment Environment"
 }
@@ -53,12 +53,12 @@ variable "my_private_ip" {
 variable "desired_capacity" {
   type        = number
   description = "Desired capacity for ASG"
-  default     = 2
+  default     = 3
 }
 
 # Bastion CIDR for EC2 SG
 variable "bastion_cidrs" {
   type        = string
-  default     = "10.100.2.0/24"
+  default     = "10.200.2.0/24"
   description = "Bastion subnet range"
 }

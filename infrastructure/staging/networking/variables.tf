@@ -14,14 +14,14 @@ variable "prefix" {
 
 # VPC CIDR range
 variable "vpc_cidr" {
-  default     = "10.100.0.0/16"
+  default     = "10.200.0.0/16"
   type        = string
   description = "VPC for Dev Environment"
 }
 
 # Provision public subnets in Dev VPC
 variable "public_cidr_blocks" {
-  default     = ["10.100.1.0/24", "10.100.2.0/24"]
+  default     = ["10.200.1.0/24", "10.200.2.0/24", "10.200.3.0/24"]
   type        = list(string)
   description = "Public Subnet CIDRs for Dev Environment"
 }
@@ -29,14 +29,14 @@ variable "public_cidr_blocks" {
 
 # Provision private subnets in Dev VPC
 variable "private_cidr_blocks" {
-  default     = ["10.100.3.0/24", "10.100.4.0/24"]
+  default     = ["10.200.4.0/24", "10.200.5.0/24", "10.200.6.0/24"]
   type        = list(string)
   description = "Private Subnet CIDRs for Dev Environment"
 }
 
 # Variable to signal the current environment 
 variable "env" {
-  default     = "dev"
+  default     = "staging"
   type        = string
   description = "Environment"
 }

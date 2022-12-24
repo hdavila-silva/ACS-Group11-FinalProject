@@ -17,7 +17,7 @@ data "aws_ami" "latest_amazon_linux" {
 data "terraform_remote_state" "network" {
   backend = "s3"
   config = {
-    bucket = "group11-dev-private-bucket"
+    bucket = "group11-staging-private-bucket"
     key    = "dev/network/terraform.tfstate"
     region = "us-east-1"
   }
