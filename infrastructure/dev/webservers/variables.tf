@@ -60,5 +60,5 @@ variable "desired_capacity" {
 variable "bastion_cidrs" {
   type        = string
   default     = "10.100.2.0/24"
-  description = "Bastion subnet range
+  description = "Bastion subnet range"
 }
